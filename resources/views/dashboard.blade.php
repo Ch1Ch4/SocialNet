@@ -1,7 +1,13 @@
 @extends('layouts\master')
 
 @section('content')
-
+    @if (Session::has('message'))
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                {{ Session::get('message') }}
+            </div>
+        </div>
+    @endif
     <section class="row new-post">
         <div class="col-md-6 col-md-offset-3">
             <header><h3>What do you have to say?</h3></header>
@@ -18,18 +24,20 @@
     <section class="row posts">
         <div class="col-md-6 col-md-offset-3">
             <header><h3>What other people sy?</h3></header>
-            <article class="post">
-                <p>Blablablablablablab</p>
-                <div class="info">
-                    Posted by Max on 12 Feb 2016
-                </div>
-                <div class="interaction">
-                    <a href="#">Like</a> |
-                    <a href="#">Dislike</a> |
-                    <a href="#">Edit</a> |
-                    <a href="#">Delete</a>
-                </div>
-            </article>
+            @foreach($posts as $post)
+                <article class="post">
+                    <p>{{ $post->body }}</p>
+                    <div class="info">
+                        Posted by {{ $post->user->first_name }} on {{ $post->created_at }}
+                    </div>
+                    <div class="interaction">
+                        <a href="#">Like</a> |
+                        <a href="#">Dislike</a> |
+                        <a href="#">Edit</a> |
+                        <a href="#">Delete</a>
+                    </div>
+                </article>
+            @endforeach
         </div>
     </section>
 
